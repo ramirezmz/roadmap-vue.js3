@@ -83,3 +83,20 @@ But, how do we now access the value of the input?
 
 That's where **v-model** comes in, Vue's v-model directive makes it easy to bind reactive data to a form input.
 So that whether the data is modified by the user via the input or by the code, the data always stays in sync.
+- First, we need to create a new reactive ref, called newItem. It will be inizialization an empty string.
+- Next, we need to add v-model to our input.
+Just like that we've established a two-way data binding, between our input and the newItem data.
+```js
+const newItem = ref('')
+&&
+<input v-model="newItem" type="text" placeholder="Add an Item">
+```
+That way they'll always stay in-sync.
+
+- Let's print out the value off the newItem just under the input.
+```js
+const newItem = ref('')
+&&
+<input v-model="newItem" type="text" placeholder="Add an Item">
+{{ newItem }}
+```
