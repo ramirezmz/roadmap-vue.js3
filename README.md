@@ -100,3 +100,93 @@ const newItem = ref('')
 <input v-model="newItem" type="text" placeholder="Add an Item">
 {{ newItem }}
 ```
+
+# 5th Lesson
+## User Events in Vue 3
+
+Currently, we can type an input, but we need some kind of UI element, a button, for instance, for the user to interact with, and then we need to be able to listen for the click event of that button to actually add the item to the list below.
+
+- Add button
+```js
+<button
+   v-on:click="items.push({id: items.length + 1,label: newItem})" 
+   class="btn btn-primary"
+   >
+   Save item
+</button>
+```
+
+We can add to send message with enter as like this:
+```js
+<template>
+      <div>
+         <h1>{{ header }}</h1>
+         <form 
+            class="add-item-form"
+            > 
+         <input 
+            v-model.trim="newItem" 
+            v-on:keyup.enter="items.push({id: items.length + 1,label: newItem})" 
+            type="text" 
+            placeholder="Add an item"
+         >
+         <label>
+            <input type="checkbox" v-model="newItemHighPriority">
+            High Priority
+         </label>
+         <button 
+            v-on:click="items.push({id: items.length + 1,label: newItem})" 
+            class="btn btn-primary"
+            >
+            Save item
+         </button>
+         </form>
+            <ul>
+               <li v-for="({id, label}) in items" :key="id">
+                  {{ label }}
+               </li>
+            </ul>
+      </div>
+</template>
+```
+
+But, as we put all events in form, we can simplify like this:
+```js
+<template>
+      <div>
+         <h1>{{ header }}</h1>
+         <form 
+            class="add-item-form"
+            v-on:submit.prevent="items.push({id: items.length + 1,label: newItem})"
+            > 
+         <input 
+            v-model.trim="newItem"  
+            type="text" 
+            placeholder="Add an item"
+         >
+         <label>
+            <input type="checkbox" v-model="newItemHighPriority">
+            High Priority
+         </label>
+         <button 
+            class="btn btn-primary"
+            >
+            Save item
+         </button>
+         </form>
+            <ul>
+               <li v-for="({id, label}) in items" :key="id">
+                  {{ label }}
+               </li>
+            </ul>
+      </div>
+</template>
+```
+- Lastly, vue provides a shorthand for the v-on syntax, that is using an @symbol, using the v-on shorthand, makes our templates look a little nicer.
+
+```js
+<form 
+   class="add-item-form"
+   @submit.prevent="items.push({id: items.length + 1,label: newItem})"
+> 
+```
