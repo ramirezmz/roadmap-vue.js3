@@ -314,6 +314,8 @@ const doEdit = (e) => {
       </div>
 </template>
 ```
+# 9th Class
+## Dynamic CSS Classes with Vue
 
 
 
