@@ -247,3 +247,121 @@ const saveItem = () => {
       </div>
 </template>
 ```
+# 8th Class
+## HTML Attribute Binding in Vue
+We know how to render data in the DOM with Vue 3, and now it's time to take a closer look at how we can bind HTML attributes to our Vue data.
+
+This is achieved with Vue's v-bind directive and would let us change the href (or any other HTML attribute) of a link or swap out an image if we need to.
+```js
+<script setup>
+import { ref } from 'vue'
+import main from './main.css'
+
+const header = ref('Shopping List App')
+const editing =ref(false)
+const items = ref([
+   // {id: 1, label:"10 party hats"},
+   // {id: 2, label:"2 board games"},
+   // {id: 3, label:"20 cups"}   
+])
+const newItem = ref("")
+const newItemHighPriority = ref(false)
+const saveItem = () => {
+   items.value.push({id: items.value.length + 1, label: newItem.value})
+   newItem.value = ""
+}
+const doEdit = (e) => {
+   editing.value = e
+   newItem.value = ""
+}
+</script>
+<template>
+      <div>
+         <div class="header">
+            <h1>{{ header }}</h1>
+            <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
+            <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
+         </div>
+         <a v-bind:href="newItem">Dynamic Link</a>
+         <form 
+            class="add-item-form"
+            v-if="editing"
+            @submit.prevent="saveItem"
+            > 
+         <input 
+            v-model.trim="newItem"  
+            type="text" 
+            placeholder="Add an item"
+         >
+         <label>
+            <input type="checkbox" v-model="newItemHighPriority">
+            High Priority
+         </label>
+         <button 
+            class="btn btn-primary"
+            >
+            Save item
+         </button>
+         </form>
+            <ul>
+               <li v-for="({id, label}) in items" :key="id">
+                  {{ label }}
+               </li>
+            </ul>
+            <p v-if="!items.length">
+               Nothing to see here
+            </p>
+      </div>
+</template>
+```
+
+
+
+
+
+
+
+
+
+
+
+# Composition API vs. Options API
+### Options API
+```js
+export default {
+  data() {
+    return {
+      name: 'John',
+    };
+  },
+  methods: {
+    doIt() {
+      console.log(`Hello ${this.name}`);
+    },
+  },
+  mounted() {
+    this.doIt();
+  },
+};
+```
+### Composition API
+```js
+export default {
+  setup() {
+    const name = ref('John');
+    
+    const doIt = () => console.log(`Hello ${name.value}`);
+    
+    onMounted(() => {
+      doIt();
+    });
+    
+    return { name };
+  },
+};
+```
+The options API uses options like `data`, `methods`, and `mounted`.
+With the composition API, we have a single `setup` hook in which we write our reactive code.
+
+Links:
+https://markus.oberlehner.net/blog/vue-3-composition-api-vs-options-api/

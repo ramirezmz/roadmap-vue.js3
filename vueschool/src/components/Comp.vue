@@ -42,6 +42,7 @@ const doEdit = (e) => {
             High Priority
          </label>
          <button 
+            :disabled="newItem.length < 5"
             class="btn btn-primary"
             >
             Save item
