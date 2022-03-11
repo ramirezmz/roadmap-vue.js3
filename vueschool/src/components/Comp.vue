@@ -1,9 +1,36 @@
+<script setup>
+import { ref } from 'vue'
+import main from './main.css'
+
+const header = ref('Shopping List App')
+const editing =ref(false)
+const items = ref([
+   // {id: 1, label:"10 party hats"},
+   // {id: 2, label:"2 board games"},
+   // {id: 3, label:"20 cups"}   
+])
+const newItem = ref("")
+const newItemHighPriority = ref(false)
+const saveItem = () => {
+   items.value.push({id: items.value.length + 1, label: newItem.value})
+   newItem.value = ""
+}
+const doEdit = (e) => {
+   editing.value = e
+   newItem.value = ""
+}
+</script>
 <template>
       <div>
-         <h1>{{ header }}</h1>
+         <div class="header">
+            <h1>{{ header }}</h1>
+            <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
+            <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
+         </div>
          <form 
             class="add-item-form"
-            @submit.prevent="items.push({id: items.length + 1,label: newItem})"
+            v-if="editing"
+            @submit.prevent="saveItem"
             > 
          <input 
             v-model.trim="newItem"  
@@ -25,16 +52,8 @@
                   {{ label }}
                </li>
             </ul>
+            <p v-if="!items.length">
+               Nothing to see here
+            </p>
       </div>
 </template>
-<script setup>
-import { ref } from 'vue'
-import main from './main.css'
-
-const header = ref('Shopping List App')
-const items = ref([
-   {id: 1, label:"10 party hats"},
-   {id: 2, label:"2 board games"},
-   {id: 3, label:"20 cups"}   
-])
-</script>
