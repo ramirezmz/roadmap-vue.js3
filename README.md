@@ -317,15 +317,130 @@ const doEdit = (e) => {
 # 9th Class
 ## Dynamic CSS Classes with Vue
 
+# 10th Class
+## Computed Properties in Vue with the Composition API
+Computed properties  lets us perform transformations or calculations based on our data
 
+Example:
+In order to get an idea of what computed props are. Let's say we wanted to enforce a character limit on our newItem field, and we wanted to show our users how many characters they had left, while they type. Well, that's the perfect use case, for a computed property.
 
+- The first thing that we need to do, is import a computed function from vue.
+- Just like ref, computed is a helper function provided by vue that helps us interact with its reactivity system.
+ 
+  ```js
+  <script setup>
+  import { ref, computed } from 'vue'
+  ```
 
+- Next we need to create a variable called "characterCount"
+  ```js
+  <script setup>
+  import { ref, computed } from 'vue'
 
+  const characterCount = () => {
+     return newItem.value.length
+  }
+  ```
 
+- Now, in order to handle this as a computed prop, that will behave in a performant manner and only update when newItem updates will pass the function to the computed function. And that's how you create a computed prop.
 
+```js
+  <script setup>
+  import { ref, computed } from 'vue'
+  
+  const characterCount = computed(() => {
+     return newItem.value.length
+  })
+```
 
+- Now let's use it to display the characterCount on the screen. I'll use a p tag with the class of counter, print out the characterCount, and the just hardcode in a static 200 here.
+```js
+<script setup>
+import { ref, computed } from 'vue'
+import main from './main.css'
 
+const characterCount = computed(() => {
+   return newItem.value.length
+})
+const header = ref('Shopping List App')
+const editing =ref(false)
+const items = ref([
+   {id: 1, label:"10 party hats", purchased: true, highPriority: false},
+   {id: 2, label:"2 board games", purchased: true, highPriority: false},
+   {id: 3, label:"20 cups", purchased: false, highPriority: true}   
+])
+const newItem = ref("")
+const newItemHighPriority = ref(false)
+const saveItem = () => {
+   items.value.push(
+      {
+         id: items.value.length + 1,
+         label: newItem.value,
+         highPriority: newItemHighPriority.value
+      })
+   newItem.value = ""
+   newItemHighPriority.value = ""
+}
+const doEdit = (e) => {
+   editing.value = e
+   newItem.value = ""
+   newItemHighPriority.value = ""
+}
 
+const togglePurchased = (item) => {
+   item.purchased = !item.purchased
+}
+</script>
+<template>
+      <div>
+         <div class="header">
+            <h1>{{ header }}</h1>
+            <button v-if="editing" class="btn" @click="doEdit(false)">Cancel</button>
+            <button v-else class="btn btn-primary" @click="doEdit(true)">Add Item</button>
+         </div>
+         <form 
+            class="add-item-form"
+            v-if="editing"
+            @submit.prevent="saveItem"
+            > 
+         <input 
+            v-model.trim="newItem"  
+            type="text" 
+            placeholder="Add an item"
+         >
+         <label>
+            <input type="checkbox" v-model="newItemHighPriority">
+            High Priority
+         </label>
+         <button 
+            :disabled="newItem.length < 5"
+            class="btn btn-primary"
+            >
+            Save item
+         </button>
+         </form>
+         <p class="counter">
+            {{characterCount}}/200
+         </p>
+            <ul>
+               <li 
+                  v-for="(item, index) in items" 
+                  @click="togglePurchased(item)"
+                  :key="item.id"
+                  class="static-class"
+                  :class="{strikeout: item.purchased, priority: item.highPriority}"
+                  >
+                  {{ item.label }}
+               </li>
+            </ul>
+            <p v-if="!items.length">
+               Nothing to see here
+            </p>
+      </div>
+</template>
+```
+- You can see the character count update in real time.
+- Computed properties are extremely powerful tools for encapsulating data transformations and manipulations
 
 # Composition API vs. Options API
 ### Options API
@@ -365,5 +480,38 @@ export default {
 The options API uses options like `data`, `methods`, and `mounted`.
 With the composition API, we have a single `setup` hook in which we write our reactive code.
 
+
+## REF and REACTIVE
+- `reactive()` only takes objects, NOT Js primitives (strings, Boolean, NUmber, BigInt, Symbol, null, undefined)
+- `ref()` is calling `reactive()` behind the scenes
+- Since `reactive() works for objects and `refs()` calls `reactive()`, objects work for both.
+- BUT, `ref()` has a `.value` property for reassigning, `reactive()` does not have this and thereforeCANNOT be reassigned.
+
+## USE
+`ref()` when...
+   
+   - It's a primitives (for example 'strings', true, 23, etc)
+   - It's an objects you need to later reassign (like an array )
+
+
+
+
+There is a good reason for using both ref and reactive in that example.
+
+When you write reactive([]) you are making that array reactive. That allows Vue to track when that array is mutated but there's no way to change it for a different array.
+
+When you write ref([]) it is equivalent to ref(reactive([])). Any object (including an array) passed to ref will be passed to reactive internally. Because the array is wrapped in a ref we also have a value property that can be used if we want to swap out that array for a different array.
+
+That's the key difference in that example. One of the arrays needs to be reassigned in the onBeforeUpdate hook and we wouldn't be able to do that if it just used reactive.
+
+They could both be written using ref but that would introduce an extra wrapper object for list that the example doesn't need.
+
+There are other ways it could be written. In that example we never see divs used for anything, so whether it even needs reactivity is unclear. If it isn't needed outside the setup method then we could potentially assign a new value directly to divs itself (switching the const to let) and skip all the reactivity stuff altogether.
+
+Another way of writing it would be to set the length to 0 rather than assigning a new array. Implemented that way it could use reactive instead of ref for both.
+
+The current example tries to strike a balance. It doesn't show the other parts of the component, such as how list is modified or how divs is used. It shows the principle via a reasonable implementation but in practice it may be possible to simplify/complicate it depending the specifics.
+
 Links:
 https://markus.oberlehner.net/blog/vue-3-composition-api-vs-options-api/
+https://github.com/vuejs/docs/issues/801

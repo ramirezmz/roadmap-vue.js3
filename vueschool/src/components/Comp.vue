@@ -1,7 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import main from './main.css'
 
+const characterCount = computed(() => {
+   return newItem.value.length
+})
 const header = ref('Shopping List App')
 const editing =ref(false)
 const items = ref([
@@ -59,6 +62,9 @@ const togglePurchased = (item) => {
             Save item
          </button>
          </form>
+         <p class="counter">
+            {{characterCount}}/200
+         </p>
             <ul>
                <li 
                   v-for="(item, index) in items" 
