@@ -442,6 +442,11 @@ const togglePurchased = (item) => {
 - You can see the character count update in real time.
 - Computed properties are extremely powerful tools for encapsulating data transformations and manipulations
 
+# 11th Class - Reactivity Fundamentals
+
+
+
+
 # Composition API vs. Options API
 ### Options API
 ```js
