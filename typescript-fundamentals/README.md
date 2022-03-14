@@ -90,5 +90,109 @@ console.log(sum(2, 4))
 ```
 
 # 6th Class - Functions: Parameter Destructuring. Void and Optional Params in Typescript
+```ts
+function greet(name? : string) {
+  if(name) {
+    console.log(`Hello ${name}`)
+  } else{
+    console.log('Hello Stranger')
+  }
+}
+greet('Roberto')
+```
 
+# 7th Class - Union Types in Typescript
+```ts
+let booleanOrString: string | boolean = 'I could change'
+booleanOrString = true
+```
+or
+```ts
+function printId(id: string | number) {
+  if(typeof id === 'string') {
+    console.log(id.toUpperCase())
+  } else{
+    console.log(id)
+  }
+}
+```
 
+# 8th Class - Literal Types in Typescript
+
+```ts
+function setProductSize( size: 'small' | 'medium' | 'large') {
+  // ...
+}
+setProductSize('asdas') // error
+setProductSize('small') // OK
+```
+
+# 9th Class - Type Aliases in Typescript
+
+```ts
+type Sizes = 'small' | 'medium' | 'large'
+function setProductSize( size: Sizes) {
+  // ...
+}
+setProductSize('small')
+```
+And we can do it for objects:
+```ts
+type Product = {
+  name: string,
+  price: number
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 24
+}
+```
+
+# 10th Class - Defining Intergaces in Typescript
+We change the word type to interface and the remove the equal sign
+```ts
+interface Product {
+  name: string,
+  price: number
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 24
+}
+```
+Typescript still happy to our tshirt variable!
+So, what's the difference between types aliases and interfaces?
+Besides a few more advanced differences, 
+- the primary difference is that we can add new fields to interfaces at any time.
+```ts
+interface Product {
+  name: string,
+  price: number
+}
+
+interface Product {
+  color: string,
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 24
+}
+```
+- Let's say that color isn't required, we can use a question mark after the property name
+```ts
+interface Product {
+  name: string,
+  price: number,
+  color?: string,
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 24
+}
+```
+
+# 11th Class - Extending Interfaces in Typescript
