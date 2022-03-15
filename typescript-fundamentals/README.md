@@ -196,3 +196,92 @@ const tshirt: Product = {
 ```
 
 # 11th Class - Extending Interfaces in Typescript
+```ts
+interface InventoryItem{
+  name: string,
+  price: number,
+}
+interface Product extends InventoryItem{
+  color?: string,
+}
+interface Service extends InventoryItem{
+  startTime: Date,
+  endTime: Date,
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 12
+}
+
+const photoShoot : Service = {
+  startTime: new Date('May 9, 2022 11:00:00'),
+  endTime: new Date('May 9, 2022 12:00:00'),
+  name: 'Roberto Ramirez Shoot',
+  price: 500
+}
+```
+
+# 12th Class - Using Interfaces in Typescript
+
+```ts
+interface InventoryItem{
+  name: string,
+  price: number,
+}
+interface Product extends InventoryItem{
+  color?: string,
+}
+interface Service extends InventoryItem{
+  startTime: Date,
+  endTime: Date,
+}
+
+const tshirt: Product = {
+  name: 'T-shirt Desing B',
+  price: 12
+}
+
+const photoShoot : Service = {
+  startTime: new Date('May 9, 2022 11:00:00'),
+  endTime: new Date('May 9, 2022 12:00:00'),
+  name: 'Roberto Ramirez Shoot',
+  price: 500
+}
+
+function purchaseItem(item: InventoryItem) : InventoryItem{
+  console.log(item.price)
+  return item.price
+}
+
+purchaseItem(photoShoot)
+```
+
+# 13th Class - Enums in Typescript
+
+Enums are used to define related constants together, under a single name.
+
+```ts
+enum Sizes {
+  small, // 0
+  medium, // 1
+  large // 2
+}
+console.log(Sizes)
+```
+
+# 14th Class - Classes in Typescript
+
+```ts
+enum Sizes {
+  small, // 0
+  medium, // 1
+  large // 2
+}
+
+class Product{
+  name: string
+  price: number
+  color: string
+}
+```
