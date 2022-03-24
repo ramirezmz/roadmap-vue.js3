@@ -517,6 +517,14 @@ Another way of writing it would be to set the length to 0 rather than assigning 
 
 The current example tries to strike a balance. It doesn't show the other parts of the component, such as how list is modified or how divs is used. It shows the principle via a reasonable implementation but in practice it may be possible to simplify/complicate it depending the specifics.
 
-Links:
+# <script setup>
+is a compile-time syntactic sugar for using Composition API inside Single File Components (SFCs). It is the recommended syntax if you are using both SFCs and Composition API. It provides a number of advanges over the normal `<script>` syntax:
+
+- More succinct code with less boilerplate.
+- Ability to declare props and emitted events using pure TypeScript
+- Better runtime performance (the template is compiled into a render function in the same scope, without an intermediate proxy)
+- Better IDE type-inference performance (less work for the language server to extract types from code)
+
+### Links:
 https://markus.oberlehner.net/blog/vue-3-composition-api-vs-options-api/
 https://github.com/vuejs/docs/issues/801
