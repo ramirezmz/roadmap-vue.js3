@@ -5,11 +5,13 @@ const routes = [
   {
     path: "/",
     name: "home",
+    props: true,
     component: HomeView,
   },
   {
-    path: "/details/:id",
+    path: "/details/:slug",
     name: "DestinationDetails",
+    props: true,
     component: () =>
       import(
         /* webpackChunkName: "DestinationDetails" */ "../views/DestinationDetails.vue"
