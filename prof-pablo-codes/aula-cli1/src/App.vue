@@ -1,15 +1,16 @@
 <template>
   <div>
-    <NewComponent />
+
+    <Projeto />
   </div>
 </template>
 
 <script>
-import NewComponent from "./components/NewComponent.vue";
+import Projeto from "./components/Projeto.vue"
 
 export default {
   name: 'App',
-  components: { NewComponent }
+  components: { Projeto }
 }
 </script>
 <style>
