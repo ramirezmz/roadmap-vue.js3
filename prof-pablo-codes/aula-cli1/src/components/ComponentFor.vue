@@ -1,7 +1,7 @@
 <template>
    <div>
-      <p v-for="pais in paises" :key="pais.id" >
-         {{pais.nome}}
+      <p v-for="(pais, index) in paises" :key="pais.id" >
+         {{index}} - {{pais.nome}}
       </p>
       
    </div>
