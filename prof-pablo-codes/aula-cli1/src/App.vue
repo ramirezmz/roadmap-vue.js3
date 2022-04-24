@@ -1,16 +1,16 @@
 <template>
   <div>
-    <ComponentFor />
+    <ComponentVOn />
   </div>
 </template>
 
 <script>
-import ComponentFor from "./components/ComponentFor.vue";
+import ComponentVOn from "./components/ComponentVOn.vue";
 
 export default {
   name: 'App',
   components: {
-    ComponentFor
+    ComponentVOn
 }
 }
 </script>
