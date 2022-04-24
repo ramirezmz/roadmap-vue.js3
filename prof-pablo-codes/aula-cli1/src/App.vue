@@ -1,19 +1,19 @@
 <template>
   <div>
-
-    <Projeto />
+    <ComponentFor />
   </div>
 </template>
 
 <script>
-import Projeto from "./components/Projeto.vue"
+import ComponentFor from "./components/ComponentFor.vue";
 
 export default {
   name: 'App',
-  components: { Projeto }
+  components: {
+    ComponentFor
+}
 }
 </script>
 <style>
 
 </style>
-1
