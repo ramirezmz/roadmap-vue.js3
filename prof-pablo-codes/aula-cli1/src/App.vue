@@ -1,17 +1,27 @@
 <template>
   <div>
-    <ComponentVOn />
+    <h1>Olá</h1>
+    <ComponentEmits />
   </div>
 </template>
 
 <script>
-import ComponentVOn from "./components/ComponentVOn.vue";
+import ComponentEmits from "./components/ComponentEmits.vue";
 
 export default {
   name: 'App',
   components: {
-    ComponentVOn
-}
+    ComponentEmits
+},
+  setup(){
+    const message = "Robertopaolo está praticando Vue"
+    const isMostrarMessagem = true
+    
+    return {
+    message,
+    isMostrarMessagem
+    }
+  }
 }
 </script>
 <style>
