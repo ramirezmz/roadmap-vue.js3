@@ -1,26 +1,24 @@
 <template>
   <div>
-    <h1>Olá</h1>
-    <ComponentEmits />
+    <ul>
+      <li>
+        <router-link to="/">Home</router-link>
+        <router-link to="/sobre">Sobre</router-link>
+      </li>
+    </ul>
+
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import ComponentEmits from "./components/ComponentEmits.vue";
 
 export default {
   name: 'App',
-  components: {
-    ComponentEmits
-},
+  components: {},
   setup(){
-    const message = "Robertopaolo está praticando Vue"
-    const isMostrarMessagem = true
-    
-    return {
-    message,
-    isMostrarMessagem
-    }
+ 
+    return {}
   }
 }
 </script>
